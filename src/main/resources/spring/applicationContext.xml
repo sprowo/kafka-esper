@@ -6,6 +6,7 @@
 
     <!-- 导入其它spring.xml资源 -->
     <import resource="spring-jdbc.xml"/>
-    <import resource="spring-kafka.xml"/>
+    <import resource="spring-kafka-producer.xml"/>
+    <import resource="spring-kafka-consumer.xml"/>
 
 </beans>
