@@ -15,6 +15,15 @@ public class KafkaTopicConfig {
     private String sms;
     private String logon;
     private String register;
+    private String test;
+
+    public String getTest() {
+        return test;
+    }
+
+    public void setTest(String test) {
+        this.test = test;
+    }
 
     public String getMarketing() {
         return marketing;

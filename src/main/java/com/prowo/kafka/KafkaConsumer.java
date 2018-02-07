@@ -3,11 +3,16 @@ package com.prowo.kafka;
 import com.alibaba.fastjson.JSONObject;
 import com.prowo.esper.event.DeviceEvent;
 import com.prowo.esper.service.ComputeService;
+import com.prowo.mapper.DeviceMapper;
+import com.prowo.model.Device;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.listener.MessageListener;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * kafka监听器启动 自动监听是否有消息需要消费
@@ -18,6 +23,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class KafkaConsumer implements MessageListener<String, String> {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Resource
+    private DeviceMapper deviceMapper;
 
     /**
      * 监听器自动执行该方法 消费消息 自动提交offset 执行业务代码 （high level api
@@ -33,15 +41,36 @@ public class KafkaConsumer implements MessageListener<String, String> {
 
         JSONObject jsonObject = JSONObject.parseObject(json);
 
-        DeviceEvent event = new DeviceEvent();
-        event.setDeviceId(jsonObject.getString(""));
-        event.setIp(jsonObject.getString(""));
-        event.setUserId(jsonObject.getString(""));
-        event.setRequestTime(jsonObject.getDate(""));
+        String deviceId = jsonObject.getString("deviceId");
+        String userId = jsonObject.getString("userId");
+        String ip = jsonObject.getString("ip");
+        Date requestTime = jsonObject.getDate("requestTime");
 
-        ComputeService.sendDeviceEvent(event, jsonObject, event.getDeviceId());
+        DeviceEvent event = new DeviceEvent();
+        event.setDeviceId(deviceId);
+        event.setIp(ip);
+        event.setUserId(userId);
+        event.setRequestTime(requestTime);
+
+        ComputeService.sendDeviceEvent(event, jsonObject, deviceId);
 
         logger.info("==[device]jsonObj=>{}", jsonObject.toJSONString());
+
+        Device device = new Device();
+        device.setDeviceId(deviceId);
+        device.setIp(ip);
+        device.setUserId(userId);
+        device.setLastDayDeviceIpCounts(jsonObject.getInteger("lastMinuteDeviceUsersCounts"));
+        device.setLastDayDeviceIpCounts(jsonObject.getInteger("lastMinuteDeviceIpCounts"));
+        device.setLastDayDeviceIpCounts(jsonObject.getInteger("lastHourDeviceUsersCounts"));
+        device.setLastDayDeviceIpCounts(jsonObject.getInteger("lastHourDeviceIpCounts"));
+        device.setLastDayDeviceIpCounts(jsonObject.getInteger("lastDayDeviceUsersCounts"));
+        device.setLastDayDeviceIpCounts(jsonObject.getInteger("lastDayDeviceIpCounts"));
+        device.setLastDayDeviceIpCounts(jsonObject.getInteger("lastWeekDeviceUsersCounts"));
+        device.setLastDayDeviceIpCounts(jsonObject.getInteger("lastWeekDeviceIpCounts"));
+
+        deviceMapper.insert(device);
+
     }
 
 }

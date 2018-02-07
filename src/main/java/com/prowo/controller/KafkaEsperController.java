@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 /**
  * @author prowo
@@ -31,8 +32,17 @@ public class KafkaEsperController {
 
     @RequestMapping(value = "/request", method = {RequestMethod.POST})
     public Result queryDetail(@RequestBody DeviceEvent req) {
-        kafkaProducer.sendData(kafkaTopicConfig.getMarketing(), JSON.toJSONString(req));
+        req.setRequestTime(new Date());
+        kafkaProducer.sendData(kafkaTopicConfig.getTest(), JSON.toJSONString(req));
         return new Result();
+    }
+
+    public static void main(String[] args) {
+        DeviceEvent req = new DeviceEvent();
+        req.setDeviceId("device100390305");
+        req.setIp("127.0.0.1");
+        req.setUserId("user100390305");
+        System.err.println(JSON.toJSONString(req));
     }
 
 }

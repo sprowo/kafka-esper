@@ -23,4 +23,8 @@
         <setting name="defaultStatementTimeout" value="25000"/>
     </settings>
 
+    <typeAliases>
+        <typeAlias alias="Device" type="com.prowo.model.Device"/>
+    </typeAliases>
+
 </configuration>
