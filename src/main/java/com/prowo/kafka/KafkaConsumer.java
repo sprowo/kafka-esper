@@ -60,14 +60,14 @@ public class KafkaConsumer implements MessageListener<String, String> {
         device.setDeviceId(deviceId);
         device.setIp(ip);
         device.setUserId(userId);
-        device.setLastDayDeviceIpCounts(jsonObject.getInteger("lastMinuteDeviceUsersCounts"));
-        device.setLastDayDeviceIpCounts(jsonObject.getInteger("lastMinuteDeviceIpCounts"));
-        device.setLastDayDeviceIpCounts(jsonObject.getInteger("lastHourDeviceUsersCounts"));
-        device.setLastDayDeviceIpCounts(jsonObject.getInteger("lastHourDeviceIpCounts"));
-        device.setLastDayDeviceIpCounts(jsonObject.getInteger("lastDayDeviceUsersCounts"));
+        device.setLastMinuteDeviceUsersCounts(jsonObject.getInteger("lastMinuteDeviceUsersCounts"));
+        device.setLastMinuteDeviceIpCounts(jsonObject.getInteger("lastMinuteDeviceIpCounts"));
+        device.setLastHourDeviceUsersCounts(jsonObject.getInteger("lastHourDeviceUsersCounts"));
+        device.setLastHourDeviceIpCounts(jsonObject.getInteger("lastHourDeviceIpCounts"));
+        device.setLastDayDeviceUsersCounts(jsonObject.getInteger("lastDayDeviceUsersCounts"));
         device.setLastDayDeviceIpCounts(jsonObject.getInteger("lastDayDeviceIpCounts"));
-        device.setLastDayDeviceIpCounts(jsonObject.getInteger("lastWeekDeviceUsersCounts"));
-        device.setLastDayDeviceIpCounts(jsonObject.getInteger("lastWeekDeviceIpCounts"));
+        device.setLastWeekDeviceUsersCounts(jsonObject.getInteger("lastWeekDeviceUsersCounts"));
+        device.setLastWeekDeviceIpCounts(jsonObject.getInteger("lastWeekDeviceIpCounts"));
 
         deviceMapper.insert(device);
 

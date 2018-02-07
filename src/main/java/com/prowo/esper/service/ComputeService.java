@@ -54,16 +54,15 @@ public class ComputeService {
     }
 
     public static void sendDeviceEvent(Object eventBean, JSONObject jsonObj, String deviceId) {
-        logger.info("-------sendDeviceEvent---------{}", jsonObj.toJSONString());
         runtime.sendEvent(eventBean);
         //deviceId1分钟
-        String deviceM = "select deviceId,count(distinct(userId)) userCount,count(distinct(ip))  ipCount  from mDeviceWindow where deviceId=?";
+        String deviceM = "select deviceId,count(userId) userCount,count(ip)  ipCount  from mDeviceWindow where deviceId=?";
         //1小时
-        String deviceH = "select deviceId, count(distinct(userId)) userCount,count(distinct(ip))  ipCount  from hDeviceWindow where deviceId=?";
+        String deviceH = "select deviceId, count(userId) userCount,count(ip)  ipCount  from hDeviceWindow where deviceId=?";
         //1天
-        String deviceD = "select deviceId, count(distinct(userId)) userCount,count(distinct(ip))  ipCount  from dDeviceWindow where deviceId=?";
+        String deviceD = "select deviceId, count(userId) userCount,count(ip)  ipCount  from dDeviceWindow where deviceId=?";
         //1周
-        String deviceW = "select deviceId, count(distinct(userId)) userCount,count(distinct(ip))  ipCount  from wDeviceWindow where deviceId=?";
+        String deviceW = "select deviceId, count(userId) userCount,count(ip)  ipCount  from wDeviceWindow where deviceId=?";
 
         EventBean e1 = executeQuery(deviceM, deviceId);
         EventBean e2 = executeQuery(deviceH, deviceId);
