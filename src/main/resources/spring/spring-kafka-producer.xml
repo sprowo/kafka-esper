@@ -35,7 +35,7 @@
     <bean id="KafkaTemplate" class="org.springframework.kafka.core.KafkaTemplate">
         <constructor-arg ref="producerFactory"/>
         <constructor-arg name="autoFlush" value="true"/>
-        <property name="defaultTopic" value="fundun_default"/>
+        <property name="defaultTopic" value="test"/>
     </bean>
 
 </beans>

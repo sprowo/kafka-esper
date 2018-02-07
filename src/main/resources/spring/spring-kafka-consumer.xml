@@ -10,7 +10,7 @@
         <constructor-arg>
             <map>
                 <entry key="bootstrap.servers" value="${bootstrap.servers}"/>
-                <entry key="group.id" value="${group.id.marketing}"/>
+                <entry key="group.id" value="${group.id.test}"/>
                 <entry key="enable.auto.commit" value="false"/>
                 <entry key="auto.commit.interval.ms" value="1000"/>
                 <entry key="session.timeout.ms" value="15000"/>
@@ -29,7 +29,7 @@
 
     <!-- 消费者容器配置信息 -->
     <bean id="consumerContainer" class="org.springframework.kafka.listener.config.ContainerProperties">
-        <constructor-arg value="${topic.marketing}"/>
+        <constructor-arg value="${topic.test}"/>
         <property name="messageListener" ref="kafkaConsumer"/>
     </bean>
 
