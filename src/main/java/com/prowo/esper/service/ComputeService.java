@@ -62,10 +62,6 @@ public class ComputeService {
         Date hour = jsonObj.getDate("beforeHourTime");
         Date day = jsonObj.getDate("beforeDayTime");
         Date week = jsonObj.getDate("beforeWeekTime");
-//        Date minute = DateUtil.getDateBeforeByMinute(date, 1);
-//        Date hour = DateUtil.getDateBeforeByHour(date, 1);
-//        Date day = DateUtil.getDateBeforeByDay(date, 1);
-//        Date week = DateUtil.getDateBeforeByWeek(date, 1);
 
         //deviceId1分钟
         String deviceM = "select deviceId,count(userId) userCount,count(ip)  ipCount  from mDeviceWindow where deviceId=? and requestTime>=?";
