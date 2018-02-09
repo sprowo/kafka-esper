@@ -1,7 +1,5 @@
 package com.prowo.esper.event;
 
-import java.util.Date;
-
 /**
  * @author prowo
  * @date 2018/2/7
