@@ -10,15 +10,11 @@ public class DeviceEvent {
     private String deviceId;
     private String userId;
     private String ip;
-    private Date requestTime;
-
-    public Date getRequestTime() {
-        return requestTime;
-    }
-
-    public void setRequestTime(Date requestTime) {
-        this.requestTime = requestTime;
-    }
+    private long requestTime;
+    private long beforeMinuteTime;
+    private long beforeHourTime;
+    private long beforeDayTime;
+    private long beforeWeekTime;
 
     public String getDeviceId() {
         return deviceId;
@@ -44,4 +40,43 @@ public class DeviceEvent {
         this.ip = ip;
     }
 
+    public long getRequestTime() {
+        return requestTime;
+    }
+
+    public void setRequestTime(long requestTime) {
+        this.requestTime = requestTime;
+    }
+
+    public long getBeforeMinuteTime() {
+        return beforeMinuteTime;
+    }
+
+    public void setBeforeMinuteTime(long beforeMinuteTime) {
+        this.beforeMinuteTime = beforeMinuteTime;
+    }
+
+    public long getBeforeHourTime() {
+        return beforeHourTime;
+    }
+
+    public void setBeforeHourTime(long beforeHourTime) {
+        this.beforeHourTime = beforeHourTime;
+    }
+
+    public long getBeforeDayTime() {
+        return beforeDayTime;
+    }
+
+    public void setBeforeDayTime(long beforeDayTime) {
+        this.beforeDayTime = beforeDayTime;
+    }
+
+    public long getBeforeWeekTime() {
+        return beforeWeekTime;
+    }
+
+    public void setBeforeWeekTime(long beforeWeekTime) {
+        this.beforeWeekTime = beforeWeekTime;
+    }
 }

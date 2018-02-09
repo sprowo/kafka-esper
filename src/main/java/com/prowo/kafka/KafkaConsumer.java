@@ -50,7 +50,7 @@ public class KafkaConsumer implements MessageListener<String, String> {
         event.setDeviceId(deviceId);
         event.setIp(ip);
         event.setUserId(userId);
-        event.setRequestTime(requestTime);
+        event.setRequestTime(requestTime.getTime());
 
         ComputeService.sendDeviceEvent(event, jsonObject, deviceId);
 
@@ -60,6 +60,7 @@ public class KafkaConsumer implements MessageListener<String, String> {
         device.setDeviceId(deviceId);
         device.setIp(ip);
         device.setUserId(userId);
+        device.setRequestTime(requestTime);
         device.setLastMinuteDeviceUsersCounts(jsonObject.getInteger("lastMinuteDeviceUsersCounts"));
         device.setLastMinuteDeviceIpCounts(jsonObject.getInteger("lastMinuteDeviceIpCounts"));
         device.setLastHourDeviceUsersCounts(jsonObject.getInteger("lastHourDeviceUsersCounts"));

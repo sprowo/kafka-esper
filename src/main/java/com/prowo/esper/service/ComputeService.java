@@ -10,8 +10,11 @@ import com.espertech.esper.client.EPServiceProvider;
 import com.espertech.esper.client.EPServiceProviderManager;
 import com.espertech.esper.client.EventBean;
 import com.prowo.esper.event.DeviceEvent;
+import com.prowo.util.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Date;
 
 /**
  * @author prowo
@@ -55,19 +58,26 @@ public class ComputeService {
 
     public static void sendDeviceEvent(Object eventBean, JSONObject jsonObj, String deviceId) {
         runtime.sendEvent(eventBean);
-        //deviceId1分钟
-        String deviceM = "select deviceId,count(userId) userCount,count(ip)  ipCount  from mDeviceWindow where deviceId=?";
-        //1小时
-        String deviceH = "select deviceId, count(userId) userCount,count(ip)  ipCount  from hDeviceWindow where deviceId=?";
-        //1天
-        String deviceD = "select deviceId, count(userId) userCount,count(ip)  ipCount  from dDeviceWindow where deviceId=?";
-        //1周
-        String deviceW = "select deviceId, count(userId) userCount,count(ip)  ipCount  from wDeviceWindow where deviceId=?";
 
-        EventBean e1 = executeQuery(deviceM, deviceId);
-        EventBean e2 = executeQuery(deviceH, deviceId);
-        EventBean e3 = executeQuery(deviceD, deviceId);
-        EventBean e4 = executeQuery(deviceW, deviceId);
+        Date date = jsonObj.getDate("requestTime");
+        Date minute = DateUtil.getDateBeforeByMinute(date, 1);
+        Date hour = DateUtil.getDateBeforeByHour(date, 1);
+        Date day = DateUtil.getDateBeforeByDay(date, 1);
+        Date week = DateUtil.getDateBeforeByWeek(date, 1);
+
+        //deviceId1分钟
+        String deviceM = "select deviceId,count(userId) userCount,count(ip)  ipCount  from mDeviceWindow where deviceId=? and requestTime>?";
+        //1小时
+        String deviceH = "select deviceId, count(userId) userCount,count(ip)  ipCount  from hDeviceWindow where deviceId=? and requestTime>?";
+        //1天
+        String deviceD = "select deviceId, count(userId) userCount,count(ip)  ipCount  from dDeviceWindow where deviceId=? and requestTime>?";
+        //1周
+        String deviceW = "select deviceId, count(userId) userCount,count(ip)  ipCount  from wDeviceWindow where deviceId=? and requestTime>?";
+
+        EventBean e1 = executeQuery(deviceM, deviceId, minute);
+        EventBean e2 = executeQuery(deviceH, deviceId, hour);
+        EventBean e3 = executeQuery(deviceD, deviceId, day);
+        EventBean e4 = executeQuery(deviceW, deviceId, week);
 
         if (e1 != null) {
             String userCountM = String.valueOf(e1.get("userCount"));
@@ -96,10 +106,11 @@ public class ComputeService {
     }
 
 
-    public static EventBean executeQuery(String epl, String targetId) {
+    public static EventBean executeQuery(String epl, String targetId, Date date) {
 
         EPOnDemandPreparedQueryParameterized prepared = runtime.prepareQueryWithParameters(epl);
         prepared.setObject(1, targetId);
+        prepared.setObject(2, date.getTime());
         EPOnDemandQueryResult result = runtime.executeQuery(prepared);
         EventBean[] events = result.getArray();
 
